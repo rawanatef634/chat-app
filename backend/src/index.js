@@ -2,7 +2,8 @@ import express from "express";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import cors from "cors";
-
+import rateLimit from "express-rate-limit";
+import helmet from "helmet";
 import path from "path";
 
 import connectDB from "./lib/db.js";
@@ -17,6 +18,16 @@ const PORT = process.env.PORT;
 const __dirname = path.resolve();
 
 app.use(express.json());
+app.use(helmet());
+app.use((req, res, next) => {
+  if (req.secure) {
+    next();
+  } else {
+    res.redirect("https://" + req.headers.host + req.url);
+  }
+})
+app.use(rateLimit({ windowMs: 15 * 60 * 1000, max: 100 }));
+
 app.use(cookieParser());
 app.use(
   cors({
