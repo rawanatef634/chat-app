@@ -27,7 +27,6 @@ app.use(
   })
 );
 
-
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 100,
@@ -52,7 +51,8 @@ app.use("/api/messages", messageRoutes);
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../frontend/build")));
 
-  app.get("*", (req, res) => {
+  // Fix: Use named wildcard /*splat instead of *
+  app.get("/*splat", (req, res) => {
     res.sendFile(path.join(__dirname, "../frontend", "build", "index.html"));
   });
 }
