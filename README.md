@@ -1,4 +1,5 @@
 Chat App
+
 A real-time chat application that allows users to communicate instantly through text messages, with support for image/file uploads. This project is built with a modern tech stack to provide a seamless and interactive user experience.
 Features
 
